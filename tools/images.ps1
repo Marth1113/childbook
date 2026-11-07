@@ -1,4 +1,4 @@
-# 画像の書き出し：powershell -ExecutionPolicy Bypass -File tools/images.ps1
+﻿# 画像の書き出し：powershell -ExecutionPolicy Bypass -File tools/images.ps1
 # assets/characters, assets/originals から assets/web/ に Web 用サイズを生成する
 Add-Type -AssemblyName System.Drawing
 $root = Split-Path -Parent $PSScriptRoot

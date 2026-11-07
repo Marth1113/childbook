@@ -38,7 +38,7 @@ const stripRuby = (s) => s.replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
 
 function inline(s) {
   let h = esc(s);
-  h = h.replace(/\{([^|}]+)\|([^}]+)\}/g, '<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>');
+  h = h.replace(/\{([^|}]+)\|([^}]+)\}/g, (_, a, b) => (a === b ? a : `<ruby>${a}<rp>(</rp><rt>${b}</rt><rp>)</rp></ruby>`));
   h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   h = h.replace(/(^|[^*])\*([^*\s][^*]*?)\*/g, '$1<em>$2</em>');
   return h;
@@ -54,7 +54,7 @@ function parseChapter(lang, n) {
   const tailLines = sepIdx >= 0 ? lines.slice(sepIdx + 1) : [];
   const body = [];
   for (const raw of bodyLines) {
-    const l = raw.trim();
+    const l = raw.replace(/^[\u3000\s]+/, '').trim();
     if (!l) continue;
     if (/^[◆◇＊*]{1,3}$/.test(l) || l === '***') body.push('<hr class="scene" aria-hidden="true">');
     else if (/^#{2,}\s/.test(l)) body.push(`<h2 class="scene-title">${inline(l.replace(/^#+\s*/, ''))}</h2>`);

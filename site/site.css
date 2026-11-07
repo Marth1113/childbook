@@ -25,6 +25,7 @@ body {
   line-height: 1.8; font-weight: 500;
   background-image: radial-gradient(circle at 10% 0%, #ffe3c7 0, transparent 40%), radial-gradient(circle at 90% 10%, #ffd6e2 0, transparent 35%);
   background-attachment: fixed;
+  overflow-x: clip;
 }
 html[lang="en"] body, html[lang="es"] body, html[lang="fr"] body, html[lang="pt"] body { font-family: var(--font-latin); }
 img { max-width: 100%; height: auto; display: block; }

@@ -29,14 +29,14 @@ html,body{margin:0;width:1200px;height:630px;overflow:hidden}
 body{position:relative;font-family:${latin ? '"Fredoka",' : ''}"Zen Maru Gothic","Microsoft YaHei","Microsoft JhengHei","Malgun Gothic",sans-serif;background:#2a2350}
 .bg{position:absolute;inset:0;background:url('${kv}') center/cover}
 .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(42,35,80,.86) 0%,rgba(42,35,80,.55) 36%,rgba(42,35,80,0) 58%)}
-.box{position:absolute;left:54px;top:70px;width:560px;color:#fff}
+.box{position:absolute;left:54px;top:70px;width:620px;color:#fff}
 .t1{font-size:${latin ? 46 : 52}px;font-weight:900;line-height:1.1;text-shadow:0 4px 0 #f2622e,0 8px 20px rgba(0,0,0,.5)}
-.t2{font-size:${latin ? (L.titleLine2.length > 22 ? 50 : 58) : (L.titleLine2.length > 8 ? 66 : 80)}px;font-weight:900;line-height:1.1;margin-top:6px;text-shadow:0 5px 0 #f2622e,0 10px 24px rgba(0,0,0,.5);color:#fff4d6}
-.tag{margin-top:26px;font-size:${latin ? 26 : 28}px;font-weight:700;line-height:1.45;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.t2{white-space:nowrap;font-size:${latin ? (L.titleLine2.length > 22 ? 50 : 58) : Math.min(80, Math.floor(500 / L.titleLine2.length))}px;font-weight:900;line-height:1.1;margin-top:6px;text-shadow:0 5px 0 #f2622e,0 10px 24px rgba(0,0,0,.5);color:#fff4d6}
+.tag{margin-top:26px;font-size:${latin ? 26 : 26}px;font-weight:700;line-height:1.45;text-shadow:0 2px 8px rgba(0,0,0,.7)}
 .badge{display:inline-block;margin-top:26px;padding:10px 24px;border-radius:999px;background:linear-gradient(135deg,#ff8a3d,#ff6f91);font-size:26px;font-weight:900;box-shadow:0 6px 16px rgba(0,0,0,.3)}
 .icon{position:absolute;right:28px;bottom:24px;width:110px;height:110px;border-radius:50%;box-shadow:0 6px 20px rgba(0,0,0,.35);border:4px solid #fff}
 </style></head><body><div class="bg"></div><div class="shade"></div>
-<div class="box"><div class="t1">${esc(L.titleLine1)}</div><div class="t2">${esc(L.titleLine2)}</div><div class="tag">${esc(L.tagline)}</div><div class="badge">${esc(L.ui.ogBadge || '12 episodes · Free')}</div></div>
+<div class="box"><div class="t1">${esc(L.titleLine1)}</div><div class="t2">${esc(L.titleLine2)}</div><div class="tag">${latin ? esc(L.tagline) : esc(L.tagline).replace(/([、，,])\s*/, "$1<br>")}</div><div class="badge">${esc(L.ui.ogBadge || '12 episodes · Free')}</div></div>
 <img class="icon" src="${icon}"></body></html>`;
   const htmlPath = path.join(TMP, `${L.path}.html`);
   const png = path.join(TMP, `${L.path}.png`);
