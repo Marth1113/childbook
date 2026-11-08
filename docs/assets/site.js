@@ -144,6 +144,75 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    // 紙吹雪（Confetti）エフェクト
+    function launchConfetti(durationMs) {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      durationMs = durationMs || 3500;
+      var canvas = document.createElement('canvas');
+      canvas.className = 'confetti-canvas';
+      canvas.style.position = 'fixed';
+      canvas.style.inset = '0';
+      canvas.style.width = '100vw';
+      canvas.style.height = '100vh';
+      canvas.style.pointerEvents = 'none';
+      canvas.style.zIndex = '9999';
+      document.body.appendChild(canvas);
+
+      var ctx = canvas.getContext('2d');
+      var w = (canvas.width = window.innerWidth);
+      var h = (canvas.height = window.innerHeight);
+
+      var colors = ['#ff8a3d', '#ff6f91', '#ffd27a', '#8b5cf6', '#22a55a', '#ffffff', '#ff4d6d'];
+      var pieces = [];
+      var count = Math.min(100, Math.floor(w / 10));
+
+      for (var i = 0; i < count; i++) {
+        pieces.push({
+          x: Math.random() * w,
+          y: Math.random() * -h * 0.5,
+          w: 8 + Math.random() * 8,
+          h: 6 + Math.random() * 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 3,
+          vy: 2.5 + Math.random() * 3.5,
+          rot: Math.random() * Math.PI * 2,
+          vRot: (Math.random() - 0.5) * 0.15,
+          shape: Math.random() > 0.3 ? 'rect' : 'circle'
+        });
+      }
+
+      var start = Date.now();
+      function tick() {
+        var elapsed = Date.now() - start;
+        if (elapsed > durationMs) {
+          if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+          return;
+        }
+        ctx.clearRect(0, 0, w, h);
+        for (var j = 0; j < pieces.length; j++) {
+          var p = pieces[j];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vRot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    window.launchConfetti = window.launchConfetti || launchConfetti;
+
     var endEl = document.getElementById('end-sentinel');
     var completed = false;
     function complete() {
@@ -153,7 +222,10 @@
       if (q.done.indexOf(ep) < 0) q.done.push(ep);
       q.last = ep; saveProgress(q);
       track('episode_complete', { episode_number: ep, read_seconds: secs, episodes_completed: q.done.length });
-      if (ep === total) track('series_complete', { episodes_completed: q.done.length });
+      if (ep === total) {
+        track('series_complete', { episodes_completed: q.done.length });
+        launchConfetti(4500);
+      }
     }
     if (endEl && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) complete(); }); }, { threshold: 1 }).observe(endEl);

@@ -320,6 +320,114 @@ ${footer(L)}`;
   write(`${L.path}/index.html`, html);
 }
 
+function secretPortalBox(L) {
+  const isJa = L.path === 'ja';
+  const badge = isJa ? '全12話 読了記念特典' : 'Completion Bonus';
+  const title = isJa ? 'わすれもの探偵団「ひみつの部屋」へようこそ！' : 'Welcome to the Secret Room!';
+  const text = isJa
+    ? '最後まで読んでくれたあなたへ、探偵団からの特別な贈り物です。<br>あなただけの「デジタル団員証」の発行や、全問正解で「限定壁紙」がもらえる10問クイズに挑戦しよう！'
+    : 'A special gift for finishing the whole story!<br>Get your official Detective Member Card and take the 10-question master quiz to unlock exclusive wallpapers!';
+  const btn = isJa ? '🚪 ひみつの部屋へ行く！' : '🚪 Enter the Secret Room!';
+  return `<aside class="ep-secret-portal" aria-label="${esc(badge)}">
+  <div class="portal-card">
+    <div class="portal-sparkle">✨ 🗝️ ✨</div>
+    <span class="portal-badge">${esc(badge)}</span>
+    <h2 class="portal-title">${esc(title)}</h2>
+    <p class="portal-text">${text}</p>
+    <a class="btn btn-portal" href="/${L.path}/bonus/" data-track="bonus_portal_click">${btn}</a>
+  </div>
+</aside>`;
+}
+
+function bonusPage(L) {
+  const altPath = () => 'bonus/';
+  const isJa = L.path === 'ja';
+  const title = isJa ? `わすれもの探偵団 ひみつの部屋（読了特典）｜${L.title}` : `Secret Room (Completion Bonus) | ${L.title}`;
+  const desc = isJa
+    ? '『ポッケと わすれもの探偵団』全12話の読了特典ページ。デジタル団員証・任命状の発行、全10問の探偵団マスタークイズ、正解者限定の特製壁紙プレゼント！'
+    : 'Exclusive completion bonuses for Pocke & the Lost-and-Found Detectives: Official Member Certificate, Master Quiz, and exclusive wallpapers.';
+  const ld = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: title,
+      description: desc,
+      url: `${SITE}/${L.path}/bonus/`,
+      inLanguage: L.hreflang,
+      isPartOf: { '@type': 'CreativeWorkSeries', '@id': `${SITE}/${L.path}/#series`, name: L.title, url: `${SITE}/${L.path}/` }
+    }
+  ];
+
+  const html = `${head({ L, title, desc, canonicalPath: `/${L.path}/bonus/`, altPath, jsonld: ld, pageType: 'bonus' })}
+<body class="page-bonus">
+${header(L, altPath)}
+<main id="main" class="bonus-main">
+<nav class="crumbs" aria-label="breadcrumb"><a href="/${L.path}/">${esc(L.ui.home)}</a> › <a href="/${L.path}/#episodes">${esc(L.ui.episodes)}</a> › <span>${isJa ? '読了特典' : 'Bonus'}</span></nav>
+
+<section class="bonus-hero">
+  <div class="portal-sparkle">✨ 🗝️ ✨</div>
+  <span class="bonus-hero-badge">${isJa ? '読了記念 特典ルーム' : 'Completion Bonus'}</span>
+  <h1 class="bonus-hero-title">${isJa ? 'わすれもの探偵団「ひみつの部屋」' : 'The Detectives’ Secret Room'}</h1>
+  <p class="bonus-hero-lead">${isJa ? '『ポッケと わすれもの探偵団』全12話を最後まで読んでくれたあなたへ。<br>探偵団の仲間入りを祝して、特別特典をお届けします！' : 'Thank you for reading all 12 episodes! Welcome to the detectives’ secret room with official member card, master quiz, and exclusive wallpapers.'}</p>
+</section>
+
+<!-- Section 1: 団員証発行 -->
+<section class="bonus-section card-sec">
+  <h2 class="bonus-sec-title">🪪 ${isJa ? 'デジタル団員証・任命状' : 'Digital Member Certificate'}</h2>
+  <p class="bonus-sec-lead">${isJa ? 'あなたのお名前（またはニックネーム）を入力すると、わすれもの探偵団の公式団員証が発行されます。<br>画像として保存できるので、おうちの人やお友だちに見せてみてね！' : 'Enter your name to generate your official Detective Member Card! You can download and save it as an image.'}</p>
+  <div class="card-generator">
+    <div class="card-input-box">
+      <input type="text" id="member-name-input" maxlength="12" placeholder="${isJa ? 'あなたのお名前を入力（例: こはる）' : 'Enter your name'}" value="${isJa ? '見習い探偵' : 'Apprentice'}">
+    </div>
+    <div class="card-canvas-wrap">
+      <canvas id="card-canvas" width="800" height="500"></canvas>
+    </div>
+    <button type="button" class="btn btn-card-download" id="btn-download-card">💾 ${isJa ? '団員証を画像として保存する' : 'Download Member Card'}</button>
+  </div>
+</section>
+
+<!-- Section 2: 探偵団マスタークイズ -->
+<section class="bonus-section quiz-sec">
+  <h2 class="bonus-sec-title">🔍 ${isJa ? '探偵団マスタークイズ（全10問）' : 'Detective Master Quiz (10 Questions)'}</h2>
+  <p class="bonus-sec-lead">${isJa ? '第1話から第12話までのエピソードから10問出題！<br>全問正解すると、下に<strong>「限定壁紙」</strong>のプレゼントが出現します！' : 'Test your memory from Episode 1 to 12! Answer all 10 questions correctly to unlock the exclusive wallpaper gift below!'}</p>
+  <div class="quiz-score-bar">
+    <span>${isJa ? '正解スコア' : 'Score'}</span>
+    <span class="quiz-score-val" id="quiz-score">0 / 10</span>
+  </div>
+  <div class="quiz-list" id="quiz-list"></div>
+</section>
+
+<!-- Section 3: 限定壁紙プレゼント（初期状態は locked） -->
+<section class="bonus-section wallpaper-unlock-box locked" id="wallpaper-unlock-box">
+  <div class="wallpaper-success-badge">
+    ${isJa ? '🎉 全問正解おめでとう！ あなたは真の「わすれもの探偵団マスター」です！' : '🎉 Congratulations! You answered all 10 correctly and unlocked the exclusive wallpapers!'}
+  </div>
+  <h2 class="bonus-sec-title">🎁 ${isJa ? '読了記念 限定壁紙プレゼント' : 'Exclusive Completion Wallpapers'}</h2>
+  <p class="bonus-sec-lead">${isJa ? '探偵団の仲間たちが夕暮れの相談所ポーチに集まった、特製描き下ろしビジュアルです。<br>パソコンやスマートフォンに設定して楽しんでね！' : 'A special illustration featuring Koharu, Kanata, Ayame, Taiga, Pocke, Shiori, and Meeko gathering on the porch at twilight.'}</p>
+  <div class="wallpaper-grid">
+    <div class="wallpaper-card pc">
+      <img src="/assets/wallpapers/pocke_wallpaper_pc.jpg" alt="${isJa ? 'PC・タブレット用壁紙プレビュー' : 'PC Wallpaper Preview'}" loading="lazy">
+      <h3 class="wallpaper-title">${isJa ? 'PC・タブレット用（横画面 16:9）' : 'PC & Tablet (16:9 Landscape)'}</h3>
+      <p class="wallpaper-sub">${isJa ? '高画質 1920 × 1080' : 'High-Res 1920 × 1080'}</p>
+      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_pc.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_PC.jpg' : 'pocke_wallpaper_pc.jpg'}" data-track="download_wallpaper" data-method="pc">📥 ${isJa ? '壁紙をダウンロード' : 'Download Wallpaper'}</a>
+    </div>
+    <div class="wallpaper-card mobile">
+      <img src="/assets/wallpapers/pocke_wallpaper_mobile.jpg" alt="${isJa ? 'スマホ用壁紙プレビュー' : 'Mobile Wallpaper Preview'}" loading="lazy">
+      <h3 class="wallpaper-title">${isJa ? 'スマートフォン用（縦画面 9:16）' : 'Smartphone (9:16 Portrait)'}</h3>
+      <p class="wallpaper-sub">${isJa ? '高画質 1080 × 1920' : 'High-Res 1080 × 1920'}</p>
+      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_mobile.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_スマホ.jpg' : 'pocke_wallpaper_mobile.jpg'}" data-track="download_wallpaper" data-method="mobile">📥 ${isJa ? '壁紙をダウンロード' : 'Download Wallpaper'}</a>
+    </div>
+  </div>
+</section>
+
+${ofuseBox(L, 'bonus', true)}
+${shareBox(L, `${SITE}/${L.path}/bonus/`, title)}
+</main>
+<script src="/assets/bonus.js?v=${BUILD_DATE}" defer></script>
+${footer(L)}`;
+  write(`${L.path}/bonus/index.html`, html);
+}
+
 function episodePage(L, n) {
   const altPath = () => `ep${pad(n)}/`;
   const url = `${SITE}/${L.path}/ep${pad(n)}/`;
@@ -379,7 +487,7 @@ ${header(L, altPath)}
 </header>
 ${article}
 </article>
-${n === TOTAL && avail ? ofuseBox(L, 'final', true) : ''}
+${n === TOTAL && avail ? `${secretPortalBox(L)}\n${ofuseBox(L, 'final', true)}` : ''}
 ${nav}
 ${n !== TOTAL && avail ? ofuseBox(L, `episode_${n}`) : ''}
 ${shareBox(L, url, fullTitle)}
@@ -452,6 +560,7 @@ function sitemap() {
   const alt = (p) => langs.map((x) => `    <xhtml:link rel="alternate" hreflang="${x.hreflang}" href="${SITE}/${x.path}/${p}"/>`).join('\n');
   for (const L of langs) {
     urls.push(`  <url>\n    <loc>${SITE}/${L.path}/</loc>\n    <lastmod>${BUILD_DATE}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n${alt('')}\n  </url>`);
+    urls.push(`  <url>\n    <loc>${SITE}/${L.path}/bonus/</loc>\n    <lastmod>${BUILD_DATE}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n${alt('bonus/')}\n  </url>`);
     for (let n = 1; n <= TOTAL; n++) {
       if (!hasChapter(L.path, n)) continue;
       const altLangs = langs.filter((x) => hasChapter(x.path, n));
@@ -490,6 +599,7 @@ write('CNAME', `${DOMAIN}\n`);
 write('.nojekyll', '');
 for (const L of langs) {
   landing(L);
+  bonusPage(L);
   for (let n = 1; n <= TOTAL; n++) episodePage(L, n);
 }
 rootPage();
