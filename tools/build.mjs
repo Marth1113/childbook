@@ -103,10 +103,10 @@ function copyDir(src, dst) {
 const ogImage = (L) => (fs.existsSync(path.join(ROOT, 'assets/web/og', `${L.path}.jpg`)) ? `${SITE}/assets/og/${L.path}.jpg` : `${SITE}/assets/og/ja.jpg`);
 
 // ---------- layout ----------
-function head({ L, title, desc, canonicalPath, altPath, ogType = 'website', jsonld = [], noindex = false, pageType }) {
-  const alternates = altPath
-    ? langs.map((x) => `<link rel="alternate" hreflang="${x.hreflang}" href="${SITE}/${x.path}/${altPath(x)}">`).join('\n')
-      + `\n<link rel="alternate" hreflang="x-default" href="${altPath(ja) === '' ? `${SITE}/` : `${SITE}/${byLang.en ? 'en' : 'ja'}/${altPath(ja)}`}">`
+function head({ L, title, desc, canonicalPath, altPath, altLangs = langs, ogType = 'website', jsonld = [], noindex = false, pageType }) {
+  const alternates = altPath && !noindex
+    ? altLangs.map((x) => `<link rel="alternate" hreflang="${x.hreflang}" href="${SITE}/${x.path}/${altPath(x)}">`).join('\n')
+      + `\n<link rel="alternate" hreflang="x-default" href="${altPath(ja) === '' ? `${SITE}/` : `${SITE}/${altLangs.includes(byLang.en) ? 'en' : 'ja'}/${altPath(ja)}`}">`
     : '';
   const url = `${SITE}${canonicalPath}`;
   const og = ogImage(L);
@@ -360,7 +360,7 @@ ${c.tailHtml ? `<aside class="preview">${c.tailHtml}</aside>` : ''}`;
   <a class="btn btn-ghost" href="/${L.path}/#episodes">${esc(L.ui.toc)}</a>
   ${next ? `<a class="btn btn-primary btn-next" href="${next}" rel="next" data-track="next_episode_click" data-episode="${n}">${esc(L.ui.next)} →</a>` : '<span></span>'}
 </nav>`;
-  const html = `${head({ L, title: fullTitle, desc, canonicalPath: `/${L.path}/ep${pad(n)}/`, altPath, ogType: 'article', jsonld: ld, noindex: !avail, pageType: 'episode' })}
+  const html = `${head({ L, title: fullTitle, desc, canonicalPath: `/${L.path}/ep${pad(n)}/`, altPath, altLangs: langs.filter((x) => hasChapter(x.path, n)), ogType: 'article', jsonld: ld, noindex: !avail, pageType: 'episode' })}
 <body class="page-episode" data-ep="${n}" data-total="${TOTAL}" data-avail="${avail ? 1 : 0}">
 <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 ${header(L, altPath)}

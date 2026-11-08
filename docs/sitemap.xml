@@ -7,6 +7,12 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
   </url>
   <url>
     <loc>https://pocke.ecolifechallenge.com/ja/ep01/</loc>
@@ -14,6 +20,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
   </url>
   <url>
     <loc>https://pocke.ecolifechallenge.com/ja/ep02/</loc>
@@ -21,6 +32,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep02/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep02/"/>
   </url>
   <url>
     <loc>https://pocke.ecolifechallenge.com/ja/ep03/</loc>
@@ -28,6 +40,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep03/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep03/"/>
   </url>
   <url>
     <loc>https://pocke.ecolifechallenge.com/ja/ep04/</loc>
@@ -99,5 +112,171 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/en/ep01/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/en/ep02/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep02/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep02/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/en/ep03/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep03/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep03/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/zh-hans/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/zh-hans/ep01/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/zh-hant/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/zh-hant/ep01/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/ko/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/es/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/es/ep01/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/fr/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/pt/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://pocke.ecolifechallenge.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pocke.ecolifechallenge.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/"/>
+  </url>
+  <url>
+    <loc>https://pocke.ecolifechallenge.com/pt/ep01/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://pocke.ecolifechallenge.com/ja/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pocke.ecolifechallenge.com/en/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://pocke.ecolifechallenge.com/zh-hans/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://pocke.ecolifechallenge.com/zh-hant/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://pocke.ecolifechallenge.com/es/ep01/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://pocke.ecolifechallenge.com/pt/ep01/"/>
   </url>
 </urlset>
