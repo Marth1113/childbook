@@ -9,7 +9,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'docs');
 const SITE = 'https://pocke.ecolifechallenge.com';
 const DOMAIN = 'pocke.ecolifechallenge.com';
-const GA_ID = 'G-23P7G6C6E9';
+const GA_ID = 'G-1DPFMLLD67';
+const GTM_ID = 'GTM-WVBRLDFH';
 const OFUSE = 'https://ofuse.me/2973d74a';
 const TOTAL = 12;
 const LANG_ORDER = ['ja', 'en', 'zh-hans', 'zh-hant', 'ko', 'es', 'fr', 'pt'];
@@ -148,6 +149,7 @@ ${langs.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Fredoka:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/site.css?v=${BUILD_DATE}">
 <script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=${GTM_ID}"></script>
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
@@ -409,6 +411,13 @@ ${langs.map((x) => `<link rel="alternate" hreflang="${x.hreflang}" href="${SITE}
 <meta name="theme-color" content="#ff8a3d">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=${GTM_ID}"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','${GA_ID}',{allow_google_signals:false,allow_ad_personalization_signals:false,content_group:'root'});
+</script>
 <script>${detect}</script>
 <style>body{font-family:system-ui,sans-serif;background:#fff6ec;color:#3b2a20;text-align:center;padding:40px 16px}a{display:inline-block;margin:6px;padding:10px 18px;border-radius:999px;background:#ff8a3d;color:#fff;text-decoration:none;font-weight:700}img{max-width:100%;border-radius:16px}</style>
 </head>

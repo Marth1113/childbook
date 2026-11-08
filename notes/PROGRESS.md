@@ -7,7 +7,7 @@
 - 全12話（1クール）、各話5,000〜6,500字（常用漢字のみ）
 - 公開：GitHub Pages（main ブランチ / `docs` フォルダ、ビルド成功・公開中）
 - 多言語対応：8言語（ja, en, zh-hans, zh-hant, ko, es, fr, pt）全12話（計96話）完全翻訳済み。ブラウザ言語で自動判別
-- GA4：G-23P7G6C6E9（読了進捗・OFUSEクリック等計測）
+- GA4：G-1DPFMLLD67 / GTM：GTM-WVBRLDFH（読了進捗・OFUSEクリック等計測）
 - OFUSE：https://ofuse.me/2973d74a（各話・最終話に配置）
 
 ## 全タスク完了確認

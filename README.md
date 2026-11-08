@@ -81,7 +81,7 @@ node tools/serve.mjs                                      # http://localhost:808
 node tools/kanji_check.mjs chapters/ja/ep01.md            # 常用漢字チェック
 ```
 
-### GA4 で計測しているイベント（G-23P7G6C6E9）
+### GA4 / GTM で計測しているイベント（GA4: G-1DPFMLLD67 / GTM: GTM-WVBRLDFH）
 | イベント名 | 内容 |
 |---|---|
 | `episode_start` | エピソードを開いた（`episode_number`, `is_reread`） |
