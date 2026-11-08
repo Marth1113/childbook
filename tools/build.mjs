@@ -35,7 +35,18 @@ function hasChapter(lang, n) {
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fmt = (s, vars) => String(s).replace(/\{(\w+)\}/g, (_, k) => (vars[k] ?? `{${k}}`));
 const pad = (n) => String(n).padStart(2, '0');
-const stripRuby = (s) => s.replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
+const stripRuby = (s) => String(s ?? '').replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
+
+function cleanLd(obj) {
+  if (typeof obj === 'string') return stripRuby(obj);
+  if (Array.isArray(obj)) return obj.map(cleanLd);
+  if (obj && typeof obj === 'object') {
+    const res = {};
+    for (const [k, v] of Object.entries(obj)) res[k] = cleanLd(v);
+    return res;
+  }
+  return obj;
+}
 
 function inline(s) {
   let h = esc(s);
@@ -111,31 +122,34 @@ function head({ L, title, desc, canonicalPath, altPath, altLangs = langs, ogType
     : '';
   const url = `${SITE}${canonicalPath}`;
   const og = ogImage(L);
+  const cleanTitle = stripRuby(title);
+  const cleanDesc = stripRuby(desc);
+  const cleanSiteName = stripRuby(L.title);
   return `<!doctype html>
 <html lang="${L.hreflang}" data-lang="${L.path}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
-<meta name="keywords" content="${esc(L.keywords)}">
+<title>${esc(cleanTitle)}</title>
+<meta name="description" content="${esc(cleanDesc)}">
+<meta name="keywords" content="${esc(stripRuby(L.keywords))}">
 ${noindex ? '<meta name="robots" content="noindex,follow">' : '<meta name="robots" content="index,follow,max-image-preview:large">'}
 <link rel="canonical" href="${url}">
 ${alternates}
-<meta property="og:site_name" content="${esc(L.title)}">
+<meta property="og:site_name" content="${esc(cleanSiteName)}">
 <meta property="og:type" content="${ogType}">
-<meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(desc)}">
+<meta property="og:title" content="${esc(cleanTitle)}">
+<meta property="og:description" content="${esc(cleanDesc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="${og}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(L.title)}">
+<meta property="og:image:alt" content="${esc(cleanSiteName)}">
 <meta property="og:locale" content="${L.ogLocale}">
 ${langs.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" content="${x.ogLocale}">`).join('\n')}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:title" content="${esc(cleanTitle)}">
+<meta name="twitter:description" content="${esc(cleanDesc)}">
 <meta name="twitter:image" content="${og}">
 <meta name="theme-color" content="#ff8a3d">
 <meta name="format-detection" content="telephone=no">
@@ -156,7 +170,7 @@ gtag('js',new Date());
 gtag('set','user_properties',{site_language:'${L.path}'});
 gtag('config','${GA_ID}',{allow_google_signals:false,allow_ad_personalization_signals:false,content_group:'${pageType}',page_language:'${L.path}'});
 </script>
-${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
+${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(cleanLd(j))}</script>`).join('\n')}
 </head>`;
 }
 
@@ -206,10 +220,11 @@ function ofuseBox(L, placement, final = false) {
 function shareBox(L, url, title) {
   const text = `${L.ui.shareText}`;
   const u = encodeURIComponent(url), t = encodeURIComponent(text);
+  const cleanTitle = stripRuby(title);
   return `<section class="share" aria-label="${esc(L.ui.share)}">
   <h2>${esc(L.ui.share)}</h2>
   <div class="share-buttons">
-    <button type="button" class="btn-share native" data-share-url="${esc(url)}" data-share-title="${esc(title)}" data-share-text="${esc(text)}" hidden>📤</button>
+    <button type="button" class="btn-share native" data-share-url="${esc(url)}" data-share-title="${esc(cleanTitle)}" data-share-text="${esc(text)}" hidden>📤</button>
     <a class="btn-share x" href="https://twitter.com/intent/tweet?url=${u}&text=${t}&hashtags=${encodeURIComponent('わすれもの探偵団')}" target="_blank" rel="noopener" data-track="share" data-method="x">X</a>
     <a class="btn-share line" href="https://social-plugins.line.me/lineit/share?url=${u}" target="_blank" rel="noopener" data-track="share" data-method="line">LINE</a>
     <a class="btn-share fb" href="https://www.facebook.com/sharer/sharer.php?u=${u}" target="_blank" rel="noopener" data-track="share" data-method="facebook">Facebook</a>
@@ -250,12 +265,12 @@ function landing(L) {
   ];
   const chars = L.characters.map((c) => `<details class="char" style="--c:${c.color}" data-char="${c.id}">
     <summary>
-      <img src="/assets/characters/${c.id}-600.jpg" alt="${esc(c.name)}" width="600" height="771" loading="lazy">
-      <span class="char-role">${esc(c.role)}</span>
-      <span class="char-name">${esc(c.name)}${c.ruby && c.ruby !== c.name ? `<small>${esc(c.ruby)}</small>` : ''}</span>
-      <span class="char-catch">${CJK.has(L.path) ? `「${esc(c.catch)}」` : `“${esc(c.catch)}”`}</span>
+      <img src="/assets/characters/${c.id}-600.jpg" alt="${esc(stripRuby(c.name))}" width="600" height="771" loading="lazy">
+      <span class="char-role">${inline(c.role)}</span>
+      <span class="char-name">${inline(c.name)}${c.ruby && c.ruby !== c.name ? `<small>${esc(c.ruby)}</small>` : ''}</span>
+      <span class="char-catch">${CJK.has(L.path) ? `「${inline(c.catch)}」` : `“${inline(c.catch)}”`}</span>
     </summary>
-    <p>${esc(c.desc)}</p>
+    <p>${inline(c.desc)}</p>
   </details>`).join('\n');
   const eps = Array.from({ length: TOTAL }, (_, i) => {
     const n = i + 1;
@@ -265,8 +280,8 @@ function landing(L) {
     return `<li class="ep${avail ? '' : ' ep-soon'}" data-ep="${n}">
       <a href="/${L.path}/ep${pad(n)}/" data-track="episode_list_click" data-episode="${n}">
         <span class="ep-no">${esc(fmt(L.ui.episode, { n }))}</span>
-        <span class="ep-title">${esc(epTitle(L, n))}</span>
-        <span class="ep-teaser">${esc(e.teaser || '')}</span>
+        <span class="ep-title">${inline(epTitle(L, n))}</span>
+        <span class="ep-teaser">${inline(e.teaser || '')}</span>
         <span class="ep-meta">${avail ? esc(fmt(L.ui.minutes, { m: mins })) : esc(L.ui.comingSoon)}<span class="ep-read" hidden>✔ ${esc(L.ui.read)}</span></span>
       </a></li>`;
   }).join('\n');
@@ -292,8 +307,8 @@ ${header(L, altPath)}
 
 <section class="section story" id="story">
   <h2 class="section-title">${esc(L.ui.storyTitle)}</h2>
-  <div class="story-body">${L.ui.storyBody.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
-  <ul class="features">${L.ui.features.map((f) => `<li><span class="f-icon" aria-hidden="true">${f.icon}</span><h3>${esc(f.title)}</h3><p>${esc(f.text)}</p></li>`).join('')}</ul>
+  <div class="story-body">${L.ui.storyBody.map((p) => `<p>${inline(p)}</p>`).join('')}</div>
+  <ul class="features">${L.ui.features.map((f) => `<li><span class="f-icon" aria-hidden="true">${f.icon}</span><h3>${inline(f.title)}</h3><p>${inline(f.text)}</p></li>`).join('')}</ul>
 </section>
 
 <section class="section characters" id="characters">
@@ -310,7 +325,7 @@ ${header(L, altPath)}
 
 <section class="section faq">
   <h2 class="section-title">${esc(L.ui.faqTitle)}</h2>
-  ${L.ui.faq.map((f) => `<details class="faq-item"><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('\n')}
+  ${L.ui.faq.map((f) => `<details class="faq-item"><summary>${inline(f.q)}</summary><p>${inline(f.a)}</p></details>`).join('\n')}
 </section>
 
 ${ofuseBox(L, 'home')}
@@ -322,17 +337,17 @@ ${footer(L)}`;
 
 function secretPortalBox(L) {
   const isJa = L.path === 'ja';
-  const badge = isJa ? '全12話 読了記念特典' : 'Completion Bonus';
-  const title = isJa ? 'わすれもの探偵団「ひみつの部屋」へようこそ！' : 'Welcome to the Secret Room!';
+  const badge = isJa ? '全12話 読了（どくりょう）記念特典' : 'Completion Bonus';
+  const title = isJa ? 'わすれもの<ruby>探偵団<rp>(</rp><rt>たんていだん</rt><rp>)</rp></ruby>「ひみつの部屋」へようこそ！' : 'Welcome to the Secret Room!';
   const text = isJa
-    ? '最後まで読んでくれたあなたへ、探偵団からの特別な贈り物です。<br>あなただけの「デジタル団員証」の発行や、全問正解で「限定壁紙」がもらえる10問クイズに挑戦しよう！'
+    ? '最後まで読んでくれたあなたへ、探偵団からの特別な贈り物です。<br>あなただけの「デジタル団員証」の発行や、全問正解で「限定<ruby>壁紙<rp>(</rp><rt>かべがみ</rt><rp>)</rp></ruby>」がもらえる10問クイズに挑戦しよう！'
     : 'A special gift for finishing the whole story!<br>Get your official Detective Member Card and take the 10-question master quiz to unlock exclusive wallpapers!';
   const btn = isJa ? '🚪 ひみつの部屋へ行く！' : '🚪 Enter the Secret Room!';
-  return `<aside class="ep-secret-portal" aria-label="${esc(badge)}">
+  return `<aside class="ep-secret-portal" aria-label="${esc(stripRuby(badge))}">
   <div class="portal-card">
     <div class="portal-sparkle">✨ 🗝️ ✨</div>
-    <span class="portal-badge">${esc(badge)}</span>
-    <h2 class="portal-title">${esc(title)}</h2>
+    <span class="portal-badge">${badge}</span>
+    <h2 class="portal-title">${title}</h2>
     <p class="portal-text">${text}</p>
     <a class="btn btn-portal" href="/${L.path}/bonus/" data-track="bonus_portal_click">${btn}</a>
   </div>
@@ -342,7 +357,7 @@ function secretPortalBox(L) {
 function bonusPage(L) {
   const altPath = () => 'bonus/';
   const isJa = L.path === 'ja';
-  const title = isJa ? `わすれもの探偵団 ひみつの部屋（読了特典）｜${L.title}` : `Secret Room (Completion Bonus) | ${L.title}`;
+  const title = isJa ? `わすれもの探偵団 ひみつの部屋（全12話読了記念特典）｜${stripRuby(L.title)}` : `Secret Room (Completion Bonus) | ${L.title}`;
   const desc = isJa
     ? '『ポッケと わすれもの探偵団』全12話の読了特典ページ。デジタル団員証・任命状の発行、全10問の探偵団マスタークイズ、正解者限定の特製壁紙プレゼント！'
     : 'Exclusive completion bonuses for Pocke & the Lost-and-Found Detectives: Official Member Certificate, Master Quiz, and exclusive wallpapers.';
@@ -366,14 +381,14 @@ ${header(L, altPath)}
 
 <section class="bonus-hero">
   <div class="portal-sparkle">✨ 🗝️ ✨</div>
-  <span class="bonus-hero-badge">${isJa ? '読了記念 特典ルーム' : 'Completion Bonus'}</span>
+  <span class="bonus-hero-badge">${isJa ? '読了（どくりょう）記念 特典ルーム' : 'Completion Bonus'}</span>
   <h1 class="bonus-hero-title">${isJa ? 'わすれもの探偵団「ひみつの部屋」' : 'The Detectives’ Secret Room'}</h1>
   <p class="bonus-hero-lead">${isJa ? '『ポッケと わすれもの探偵団』全12話を最後まで読んでくれたあなたへ。<br>探偵団の仲間入りを祝して、特別特典をお届けします！' : 'Thank you for reading all 12 episodes! Welcome to the detectives’ secret room with official member card, master quiz, and exclusive wallpapers.'}</p>
 </section>
 
 <!-- Section 1: 団員証発行 -->
 <section class="bonus-section card-sec">
-  <h2 class="bonus-sec-title">🪪 ${isJa ? 'デジタル団員証・任命状' : 'Digital Member Certificate'}</h2>
+  <h2 class="bonus-sec-title">🪪 ${isJa ? 'デジタル団員証・任命状（にんめいじょう）' : 'Digital Member Certificate'}</h2>
   <p class="bonus-sec-lead">${isJa ? 'あなたのお名前（またはニックネーム）を入力すると、わすれもの探偵団の公式団員証が発行されます。<br>画像として保存できるので、おうちの人やお友だちに見せてみてね！' : 'Enter your name to generate your official Detective Member Card! You can download and save it as an image.'}</p>
   <div class="card-generator">
     <div class="card-input-box">
@@ -389,7 +404,7 @@ ${header(L, altPath)}
 <!-- Section 2: 探偵団マスタークイズ -->
 <section class="bonus-section quiz-sec">
   <h2 class="bonus-sec-title">🔍 ${isJa ? '探偵団マスタークイズ（全10問）' : 'Detective Master Quiz (10 Questions)'}</h2>
-  <p class="bonus-sec-lead">${isJa ? '第1話から第12話までのエピソードから10問出題！<br>全問正解すると、下に<strong>「限定壁紙」</strong>のプレゼントが出現します！' : 'Test your memory from Episode 1 to 12! Answer all 10 questions correctly to unlock the exclusive wallpaper gift below!'}</p>
+  <p class="bonus-sec-lead">${isJa ? '第1話から第12話までのエピソードから10問出題！<br>全問正解すると、下に<strong>「限定<ruby>壁紙<rp>(</rp><rt>かべがみ</rt><rp>)</rp></ruby>」</strong>のプレゼントが出現します！' : 'Test your memory from Episode 1 to 12! Answer all 10 questions correctly to unlock the exclusive wallpaper gift below!'}</p>
   <div class="quiz-score-bar">
     <span>${isJa ? '正解スコア' : 'Score'}</span>
     <span class="quiz-score-val" id="quiz-score">0 / 10</span>
@@ -402,20 +417,20 @@ ${header(L, altPath)}
   <div class="wallpaper-success-badge">
     ${isJa ? '🎉 全問正解おめでとう！ あなたは真の「わすれもの探偵団マスター」です！' : '🎉 Congratulations! You answered all 10 correctly and unlocked the exclusive wallpapers!'}
   </div>
-  <h2 class="bonus-sec-title">🎁 ${isJa ? '読了記念 限定壁紙プレゼント' : 'Exclusive Completion Wallpapers'}</h2>
-  <p class="bonus-sec-lead">${isJa ? '探偵団の仲間たちが夕暮れの相談所ポーチに集まった、特製描き下ろしビジュアルです。<br>パソコンやスマートフォンに設定して楽しんでね！' : 'A special illustration featuring Koharu, Kanata, Ayame, Taiga, Pocke, Shiori, and Meeko gathering on the porch at twilight.'}</p>
+  <h2 class="bonus-sec-title">🎁 ${isJa ? '全12話読了記念 限定<ruby>壁紙<rp>(</rp><rt>かべがみ</rt><rp>)</rp></ruby>プレゼント' : 'Exclusive Completion Wallpapers'}</h2>
+  <p class="bonus-sec-lead">${isJa ? '探偵団の仲間たちが夕暮れの相談所ポーチに集まった、特製描き下ろし（かきおろし）ビジュアルです。<br>パソコンやスマートフォンに設定して楽しんでね！' : 'A special illustration featuring Koharu, Kanata, Ayame, Taiga, Pocke, Shiori, and Meeko gathering on the porch at twilight.'}</p>
   <div class="wallpaper-grid">
     <div class="wallpaper-card pc">
       <img src="/assets/wallpapers/pocke_wallpaper_pc.jpg" alt="${isJa ? 'PC・タブレット用壁紙プレビュー' : 'PC Wallpaper Preview'}" loading="lazy">
       <h3 class="wallpaper-title">${isJa ? 'PC・タブレット用（横画面 16:9）' : 'PC & Tablet (16:9 Landscape)'}</h3>
       <p class="wallpaper-sub">${isJa ? '高画質 1920 × 1080' : 'High-Res 1920 × 1080'}</p>
-      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_pc.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_PC.jpg' : 'pocke_wallpaper_pc.jpg'}" data-track="download_wallpaper" data-method="pc">📥 ${isJa ? '壁紙をダウンロード' : 'Download Wallpaper'}</a>
+      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_pc.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_PC.jpg' : 'pocke_wallpaper_pc.jpg'}" data-track="download_wallpaper" data-method="pc">📥 ${isJa ? '壁紙（かべがみ）をダウンロード' : 'Download Wallpaper'}</a>
     </div>
     <div class="wallpaper-card mobile">
       <img src="/assets/wallpapers/pocke_wallpaper_mobile.jpg" alt="${isJa ? 'スマホ用壁紙プレビュー' : 'Mobile Wallpaper Preview'}" loading="lazy">
       <h3 class="wallpaper-title">${isJa ? 'スマートフォン用（縦画面 9:16）' : 'Smartphone (9:16 Portrait)'}</h3>
       <p class="wallpaper-sub">${isJa ? '高画質 1080 × 1920' : 'High-Res 1080 × 1920'}</p>
-      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_mobile.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_スマホ.jpg' : 'pocke_wallpaper_mobile.jpg'}" data-track="download_wallpaper" data-method="mobile">📥 ${isJa ? '壁紙をダウンロード' : 'Download Wallpaper'}</a>
+      <a class="btn-dl-wp" href="/assets/wallpapers/pocke_wallpaper_mobile.jpg" download="${isJa ? 'ポッケとわすれもの探偵団_壁紙_スマホ.jpg' : 'pocke_wallpaper_mobile.jpg'}" data-track="download_wallpaper" data-method="mobile">📥 ${isJa ? '壁紙（かべがみ）をダウンロード' : 'Download Wallpaper'}</a>
     </div>
   </div>
 </section>
@@ -479,7 +494,7 @@ ${header(L, altPath)}
 <article class="chapter">
 <header class="chapter-head">
   <p class="chapter-no">${esc(label)}</p>
-  <h1 class="chapter-title">${esc(title)}</h1>
+  <h1 class="chapter-title">${inline(title)}</h1>
   <div class="font-tools" role="group" aria-label="${esc(L.ui.fontSize)}">
     <span>${esc(L.ui.fontSize)}</span>
     <button type="button" data-font="s">${esc(L.ui.fontSmall)}</button><button type="button" data-font="m">${esc(L.ui.fontMedium)}</button><button type="button" data-font="l">${esc(L.ui.fontLarge)}</button>

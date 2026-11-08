@@ -165,7 +165,7 @@ html[lang="en"] .logo-2, html[lang="es"] .logo-2, html[lang="fr"] .logo-2, html[
 .chapter-body p { margin: 0 0 .9em; }
 html[lang="ja"] .chapter-body p, html[lang^="zh"] .chapter-body p { text-indent: 1em; }
 .chapter-body p.d { text-indent: 0 !important; }
-.chapter-body ruby rt { font-size: .5em; color: var(--muted); }
+ruby rt { font-size: .5em; color: var(--muted); user-select: none; }
 .chapter-body hr.scene { border: 0; text-align: center; margin: 2em 0; }
 .chapter-body hr.scene::before { content: "✦　✦　✦"; color: var(--sunset); letter-spacing: .3em; }
 .end-mark { text-align: center; font-weight: 900; color: var(--sunset-deep); margin: 2.4em 0 1em; font-size: 18px; }
